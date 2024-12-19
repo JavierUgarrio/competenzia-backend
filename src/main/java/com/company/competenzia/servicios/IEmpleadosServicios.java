@@ -8,4 +8,5 @@ public interface IEmpleadosServicios {
 
 	public ResponseEntity<RespuestaEmpleadosRest> buscarEmpleados();
 	
+	public ResponseEntity<RespuestaEmpleadosRest> buscarEmpleadosId(Long id);
 }

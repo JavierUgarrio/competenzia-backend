@@ -19,4 +19,10 @@ public class EmpleadosControlador {
 		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.buscarEmpleados();
 		return respuestaEmpleadosRest;
 	}
+	
+	@GetMapping("/empleados/{id}")
+	public ResponseEntity<RespuestaEmpleadosRest> buscarEmpleadosId(@PathVariable Long id){
+		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.buscarEmpleadosId(id);
+		return respuestaEmpleadosRest;
+	}
 }
