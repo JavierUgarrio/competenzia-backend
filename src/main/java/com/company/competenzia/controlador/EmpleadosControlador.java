@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.company.competenzia.modelo.Empleados;
 import com.company.competenzia.respuesta.RespuestaEmpleadosRest;
 import com.company.competenzia.servicios.IEmpleadosServicios;
 
@@ -25,4 +26,11 @@ public class EmpleadosControlador {
 		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.buscarEmpleadosId(id);
 		return respuestaEmpleadosRest;
 	}
+	
+	@PostMapping("/empleados")
+	public ResponseEntity<RespuestaEmpleadosRest> guardarEmpleados(@RequestBody Empleados empleado){
+		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.guardarEmpleados(empleado);
+		return respuestaEmpleadosRest;
+	}
+	
 }

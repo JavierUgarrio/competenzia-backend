@@ -66,5 +66,29 @@ public class EmpleadosServicio implements IEmpleadosServicios{
 		
 		
 	}
+	
+	@Override
+	@Transactional
+	public ResponseEntity<RespuestaEmpleadosRest> guardarEmpleados(Empleados empleado){
+		RespuestaEmpleadosRest respuestaEmpleadosRest = new RespuestaEmpleadosRest();
+		List<Empleados> listaEmpleados = new ArrayList<>();
+		
+		try {
+			Empleados empleadoGuardar = empleadosDao.save(empleado);
+			if(empleadoGuardar !=null) {
+				listaEmpleados.add(empleadoGuardar);
+				respuestaEmpleadosRest.getRespuestaEmpleados().setEmpleados(listaEmpleados);
+			}else {
+				respuestaEmpleadosRest.setMetadata("Error", "-1", "Error de guardar empleado");
+				return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.BAD_REQUEST);
+			}
+			
+		}catch(Exception ex) {
+			ex.getStackTrace();
+			respuestaEmpleadosRest.setMetadata("Error", "-1", "Error en la busqueda");
+			return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.OK);
+	}
 
 }
