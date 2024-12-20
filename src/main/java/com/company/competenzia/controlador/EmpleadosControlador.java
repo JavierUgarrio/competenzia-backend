@@ -8,6 +8,7 @@ import com.company.competenzia.modelo.Empleados;
 import com.company.competenzia.respuesta.RespuestaEmpleadosRest;
 import com.company.competenzia.servicios.IEmpleadosServicios;
 
+@CrossOrigin(origins= {"http://localhost:4200"})
 @RestController
 @RequestMapping("/apiCompetenzia")
 public class EmpleadosControlador {
