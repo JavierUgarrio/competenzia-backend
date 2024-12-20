@@ -33,4 +33,10 @@ public class EmpleadosControlador {
 		return respuestaEmpleadosRest;
 	}
 	
+	@PutMapping("/empleados/{id}")
+	public ResponseEntity<RespuestaEmpleadosRest> actualizarEmpleados (@RequestBody Empleados empleado,  @PathVariable Long id){
+		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.actualizarEmpleados(empleado, id);
+		return respuestaEmpleadosRest;
+	}
+	
 }

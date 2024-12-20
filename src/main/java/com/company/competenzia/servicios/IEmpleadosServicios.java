@@ -12,4 +12,6 @@ public interface IEmpleadosServicios {
 	public ResponseEntity<RespuestaEmpleadosRest> buscarEmpleadosId(Long id);
 
 	public ResponseEntity<RespuestaEmpleadosRest> guardarEmpleados(Empleados empleado);
+	
+	public ResponseEntity<RespuestaEmpleadosRest> actualizarEmpleados(Empleados empleado, Long id);
 }

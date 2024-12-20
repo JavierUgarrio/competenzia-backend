@@ -78,6 +78,7 @@ public class EmpleadosServicio implements IEmpleadosServicios{
 			if(empleadoGuardar !=null) {
 				listaEmpleados.add(empleadoGuardar);
 				respuestaEmpleadosRest.getRespuestaEmpleados().setEmpleados(listaEmpleados);
+				respuestaEmpleadosRest.setMetadata("Ok", "1", "Empleado Guardado");
 			}else {
 				respuestaEmpleadosRest.setMetadata("Error", "-1", "Error de guardar empleado");
 				return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.BAD_REQUEST);
@@ -91,4 +92,39 @@ public class EmpleadosServicio implements IEmpleadosServicios{
 		return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.OK);
 	}
 
+	@Override
+	@Transactional
+	public ResponseEntity<RespuestaEmpleadosRest> actualizarEmpleados (Empleados empleado, Long id){
+		RespuestaEmpleadosRest respuestaEmpleadosRest = new RespuestaEmpleadosRest();
+		List<Empleados> listaEmpleados = new ArrayList<>();
+		
+		try {
+			Optional<Empleados> empleadosId = empleadosDao.findById(id);
+			if(empleadosId.isPresent()) {
+				empleadosId.get().setNombre(empleado.getNombre());
+				empleadosId.get().setApellidos(empleado.getApellidos());
+				empleadosId.get().setEmail(empleado.getEmail());
+				empleadosId.get().setTelefono(empleado.getTelefono());
+				empleadosId.get().setEquipo(empleado.getEquipo());
+				empleadosId.get().setEmpresa(empleado.getEmpresa());
+				Empleados empleadoActualizado = empleadosDao.save(empleadosId.get());
+				if(empleadoActualizado != null) {
+					listaEmpleados.add(empleadoActualizado);
+					respuestaEmpleadosRest.getRespuestaEmpleados().setEmpleados(listaEmpleados);
+					respuestaEmpleadosRest.setMetadata("OK", "1", "Empleado Actualizado");
+				}else {
+					respuestaEmpleadosRest.setMetadata("Error", "-1", "Error en la actualizacion del empleado, empleado vacio");
+					return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.BAD_REQUEST);
+				}
+			}else {
+				respuestaEmpleadosRest.setMetadata("Error", "-1", "Error en la actualizacion del empleado");
+				return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception ex) {
+			ex.getStackTrace();
+			respuestaEmpleadosRest.setMetadata("Error", "-1", "Error en la actualizacion");
+			return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.OK);
+	}
 }
