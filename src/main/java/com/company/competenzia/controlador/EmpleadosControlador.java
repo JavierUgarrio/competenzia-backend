@@ -39,4 +39,10 @@ public class EmpleadosControlador {
 		return respuestaEmpleadosRest;
 	}
 	
+	@DeleteMapping("/empleados/{id}")
+	public ResponseEntity<RespuestaEmpleadosRest> eliminarEmpleados (@PathVariable Long id){
+		ResponseEntity<RespuestaEmpleadosRest> respuestaEmpleadosRest = empleadosServicios.eliminarEmpleados(id);
+		return respuestaEmpleadosRest;
+	}
+	
 }

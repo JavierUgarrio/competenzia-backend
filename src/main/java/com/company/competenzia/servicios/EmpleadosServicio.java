@@ -127,4 +127,20 @@ public class EmpleadosServicio implements IEmpleadosServicios{
 		}
 		return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.OK);
 	}
+	
+	@Override
+	@Transactional
+	public ResponseEntity<RespuestaEmpleadosRest> eliminarEmpleados(Long id){
+		RespuestaEmpleadosRest respuestaEmpleadosRest = new RespuestaEmpleadosRest();	
+		try {
+			empleadosDao.deleteById(id);
+			respuestaEmpleadosRest.setMetadata("OK", "1", "Empleado eliminado");	
+		}catch(Exception ex) {
+			ex.getStackTrace();
+			respuestaEmpleadosRest.setMetadata("Error", "-1", "Error en la busqueda");
+			return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<RespuestaEmpleadosRest>(respuestaEmpleadosRest, HttpStatus.OK);		
+	}
+	
 }

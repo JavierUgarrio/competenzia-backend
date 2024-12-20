@@ -14,4 +14,6 @@ public interface IEmpleadosServicios {
 	public ResponseEntity<RespuestaEmpleadosRest> guardarEmpleados(Empleados empleado);
 	
 	public ResponseEntity<RespuestaEmpleadosRest> actualizarEmpleados(Empleados empleado, Long id);
+	
+	public ResponseEntity<RespuestaEmpleadosRest> eliminarEmpleados(Long id);
 }
