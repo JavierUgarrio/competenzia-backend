@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.company.competenzia.dao.IEmpleadosDao;
 import com.company.competenzia.dao.ITestCompetenciasDao;
@@ -24,6 +25,7 @@ public class TestCompetenciasServicio implements ITestCompetenciasServicios {
 	private IEmpleadosDao empleadosDao;
 	
 	@Override
+	@Transactional
 	public ResponseEntity <RespuestaTestCompetenciasRest> guardarFormulario(TestCompetencia testCompetencia, Long empleadoId){
 	
 		RespuestaTestCompetenciasRest respuestaTestRest = new RespuestaTestCompetenciasRest();
@@ -56,6 +58,36 @@ public class TestCompetenciasServicio implements ITestCompetenciasServicios {
 		}catch(Exception ex){
 			ex.printStackTrace();
 			respuestaTestRest.setMetadata("Respuesta Error", "-1", "Error en el metodo de guardar formulario");
+			return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.OK);
+	}
+	
+	//Este metodo lo aprovechare para extraer los test de competencias y posteriormente tratare los datos para la exposicion en graficos
+	@Override
+	@Transactional(readOnly= true)
+	public ResponseEntity <RespuestaTestCompetenciasRest> buscarFormularioId(Long id){
+		RespuestaTestCompetenciasRest respuestaTestRest = new RespuestaTestCompetenciasRest();
+		List<TestCompetencia>listaTestCompetencia = new ArrayList<>();
+		
+		try {
+			//Busco el ID de TestCompetencia
+			
+			Optional <TestCompetencia> testCompetencia = testCompetenciasDao.findById(id);
+			
+			if(testCompetencia.isPresent()){
+				listaTestCompetencia.add(testCompetencia.get());
+				respuestaTestRest.getRespuestaCompetencias().setListaTestCompetencia(listaTestCompetencia);
+				respuestaTestRest.setMetadata("Busqueda Id de test OK", "00", "Test encontrado");
+				
+			}else {
+				respuestaTestRest.setMetadata("Respuesta Error", "-1", "Test no encontrado");
+				return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.NOT_FOUND);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			respuestaTestRest.setMetadata("Respuesta Error", "-1", "Error en la busqueda de test por ID");
 			return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.BAD_REQUEST);
 		}
 		

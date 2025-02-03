@@ -8,4 +8,5 @@ import com.company.competenzia.respuesta.RespuestaTestCompetenciasRest;
 public interface ITestCompetenciasServicios {
 
 	public ResponseEntity <RespuestaTestCompetenciasRest> guardarFormulario(TestCompetencia testCompetencia, Long empleadoId);
+	public ResponseEntity <RespuestaTestCompetenciasRest> buscarFormularioId(Long id);
 }

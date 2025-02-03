@@ -1,18 +1,16 @@
 package com.company.competenzia.controlador;
 
-import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.company.competenzia.modelo.Empleados;
 import com.company.competenzia.modelo.TestCompetencia;
 import com.company.competenzia.respuesta.RespuestaTestCompetenciasRest;
 import com.company.competenzia.servicios.ITestCompetenciasServicios;
@@ -102,6 +100,11 @@ public class TestCompetenciasControlador {
 		
 	}
 	
+	@GetMapping("/formularios/{id}")
+	public ResponseEntity<RespuestaTestCompetenciasRest>buscarFormularioId(@PathVariable Long id){
+		ResponseEntity<RespuestaTestCompetenciasRest> respuesta = iTestCompetenciasServicios.buscarFormularioId(id);
+		return respuesta;
+	}
 
 }
 
