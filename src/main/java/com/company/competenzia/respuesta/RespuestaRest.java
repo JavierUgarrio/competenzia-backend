@@ -6,7 +6,6 @@ import java.util.HashMap;
 public class RespuestaRest {
 
 	private ArrayList<HashMap<String , String>> metadata = new ArrayList<>();
-
 	
 	//GET & SET
 	
