@@ -114,5 +114,24 @@ public class TestCompetenciasServicio implements ITestCompetenciasServicios {
 		
 		return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.OK);
 	}
+	
+	@Override
+	@Transactional(readOnly= true)
+	public ResponseEntity <RespuestaTestCompetenciasRest> buscarFormularios(){
+		RespuestaTestCompetenciasRest respuestaTestRest = new RespuestaTestCompetenciasRest();
+		try {
+			List<TestCompetencia>listaTestCompetencia = (List<TestCompetencia>) testCompetenciasDao.findAll();
+			respuestaTestRest.getRespuestaCompetencias().setListaTestCompetencia(listaTestCompetencia);
+			respuestaTestRest.setMetadata("Busqueda Id de test OK", "00", "Test encontrado");			
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+			respuestaTestRest.setMetadata("Respuesta Error", "-1", "Error en la busqueda de test por ID");
+			return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<RespuestaTestCompetenciasRest>(respuestaTestRest, HttpStatus.OK);
+	
+	}
 
 }
