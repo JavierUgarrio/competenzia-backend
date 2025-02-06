@@ -26,14 +26,14 @@ public class TestCompetenciasServicio implements ITestCompetenciasServicios {
 	
 	@Override
 	@Transactional
-	public ResponseEntity <RespuestaTestCompetenciasRest> guardarFormulario(TestCompetencia testCompetencia, Long empleadoId){
+	public ResponseEntity <RespuestaTestCompetenciasRest> guardarFormulario(TestCompetencia testCompetencia){
 	
 		RespuestaTestCompetenciasRest respuestaTestRest = new RespuestaTestCompetenciasRest();
 		List<TestCompetencia>listaTestCompetencia = new ArrayList<>();
 		
 		try {
 			//Busco el ID de empleado y posteriormente setearlo en el objeto TestCompetencia
-			
+			Long empleadoId = testCompetencia.getEmpleados().getId();
 			Optional <Empleados> empleado = empleadosDao.findById(empleadoId);
 			
 			if(empleado.isPresent()){
@@ -47,6 +47,7 @@ public class TestCompetenciasServicio implements ITestCompetenciasServicios {
 			//Guardo el formulario una vez que encuentro el empleado
 			
 			TestCompetencia testCompetenciaGuardar = testCompetenciasDao.save(testCompetencia);
+			
 			if(testCompetenciaGuardar != null) {
 				listaTestCompetencia.add(testCompetenciaGuardar);
 				respuestaTestRest.getRespuestaCompetencias().setListaTestCompetencia(listaTestCompetencia);
