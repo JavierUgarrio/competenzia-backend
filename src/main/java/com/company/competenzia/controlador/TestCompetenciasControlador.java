@@ -45,7 +45,7 @@ public class TestCompetenciasControlador {
 		
 	}
 	
-	@GetMapping("/test-competencia")
+	@GetMapping("/app-grafica")
 	public ResponseEntity<RespuestaTestCompetenciasRest>buscarFormularios(){
 		ResponseEntity<RespuestaTestCompetenciasRest> respuesta = iTestCompetenciasServicios.buscarFormularios();
 		return respuesta;
